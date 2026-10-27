@@ -12,6 +12,16 @@ app.get("/random", function (req, res) {
 });
 
 // 2. Get a specific joke
+app.get("/jokes/:id", function (req, res) {
+  const id = Number(req.params.id);
+  const joke = jokes.find((joke) => joke.id === id);
+
+  if (!joke) {
+    return res.status(404).json({ error: "Joke not found" });
+  }
+
+  res.json(joke);
+});
 
 // 3. Filter jokes by type
 

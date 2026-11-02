@@ -1,17 +1,21 @@
+// Loads the express library
 import express from "express";
 
+// Creates the server
 const app = express();
+
+// The port it listens on
 const port = 3000;
 
 app.use(express.urlencoded());
 
-// 1. Get a random joke
+// Sends back one random joke
 app.get("/random", function (req, res) {
   const randomIndex = Math.floor(Math.random() * jokes.length);
   res.json(jokes[randomIndex]);
 });
 
-// 2. Get a specific joke
+// Sends back the joke with the id in the address, or 404 if there is none
 app.get("/jokes/:id", function (req, res) {
   const id = Number(req.params.id);
   const joke = jokes.find((joke) => joke.id === id);
@@ -23,15 +27,65 @@ app.get("/jokes/:id", function (req, res) {
   res.json(joke);
 });
 
-// 3. Filter jokes by type
+// Sends back every joke of the type in ?type=
+app.get("/filter", function (req, res) {
+  const type = req.query.type;
+  const foundJokes = jokes.filter((joke) => joke.jokeType === type);
+  res.json(foundJokes);
+});
 
-// 4. Post a new joke
+// Adds a new joke from the form data and sends it back
+app.post("/jokes", function (req, res) {
+  const newJoke = {
+    id: jokes.length + 1,
+    jokeText: req.body.text,
+    jokeType: req.body.type,
+  };
+  jokes.push(newJoke);
+  res.json(newJoke);
+});
 
-// 5. Put a joke
+// Replaces a whole joke with what was sent
+app.put("/jokes/:id", function (req, res) {
+  const id = parseInt(req.params.id);
+  const replacementJoke = {
+    id: id,
+    jokeText: req.body.text,
+    jokeType: req.body.type,
+  };
+  const searchIndex = jokes.findIndex((joke) => joke.id === id);
+  jokes[searchIndex] = replacementJoke;
+  res.json(replacementJoke);
+});
 
-// 6. Patch a joke
+// Changes only the parts of a joke that were sent, keeps the rest
+app.patch("/jokes/:id", function (req, res) {
+  const id = parseInt(req.params.id);
+  const existingJoke = jokes.find((joke) => joke.id === id);
+  const replacementJoke = {
+    id: id,
+    jokeText: req.body.text || existingJoke.jokeText,
+    jokeType: req.body.type || existingJoke.jokeType,
+  };
+  const searchIndex = jokes.findIndex((joke) => joke.id === id);
+  jokes[searchIndex] = replacementJoke;
+  res.json(replacementJoke);
+});
 
-// 7. Delete a joke
+
+
+// Deletes the joke with that id, or 404 if there is none
+app.delete("/jokes/:id", function (req, res) {
+  const id = parseInt(req.params.id);
+  const searchIndex = jokes.findIndex((joke) => joke.id === id);
+  if (searchIndex === -1) {
+    return res.status(404).json({ error: "No joke with id " + id });
+  }
+  jokes.splice(searchIndex, 1);
+  res.sendStatus(200);
+});
+
+
 
 app.listen(port, function () {
   console.log("Listening on http://localhost:" + port);

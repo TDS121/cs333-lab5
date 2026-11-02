@@ -2,7 +2,7 @@
 GET http://localhost:3000/random
 
 ### 2. Joke number 3
-GET http://localhost:3000/jokes/3
+GET http://localhost:3000/jokes/13
 
 ### 2. A joke that doesn't exist
 GET http://localhost:3000/jokes/99

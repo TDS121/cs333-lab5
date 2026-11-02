@@ -156,6 +156,8 @@ app.get("/jokes/:id", function (req, res) {
 
 **Question 7:** why do we need `parseInt` here? What would `joke.id === id` do without it?
 
+ The jokes are in the array. URL is text so the string "3" is not the number 3.
+
 **TODO:** send the `/jokes/99` request. It says `200 OK` but sends nothing back. Fix it the same way as step 5, with a `404`.
 
 ## 8. Filter jokes by type
@@ -180,6 +182,8 @@ Send request **4**. To get your new joke back, change request **2** to `/jokes/1
 
 **TODO:** save `index.js` (that restarts the server), then send `/jokes/13` again.
 **Question 8:** where did your joke go? Why? What would fix it? (Hint: Part 3.)
+
+The joke lived in memory so it was wiped when the server restarted
 
 ## 10. Put and patch
 
@@ -215,6 +219,8 @@ Send requests **5** and **6**.
 **TODO:** in request **5** (PUT), delete `text=...&` so it only sends `type=Programming`, and send it again.
 **Question 9:** what happened to the joke's text? So what is the difference between PUT and PATCH?
 
+The jokes textwas not there but the joke type says `programming` PUT replaces the joke with what is sent and PATCH changes the fields that you sent
+
 ## 11. Delete a joke
 
 ```js
@@ -233,8 +239,13 @@ Send request **7**, then send it again.
 
 **Question 10:** what status do you get the first time, and the second time?
 
+The first time i got a `200 OK` and the second time I got a `404 Not Found` with no joke if
+
 **TODO:** with joke 4 deleted, send request **4** (POST) once.
 **Question 11:** what `id` does the new joke get? Is there already a joke with that id? Why is that a problem? (Optional: fix it.)
+
+The new joke gets id 12 but there is already a joke with id 12. The problem is only 1 of them is meant to be identified
+
 
 **Comment your `Jokes/index.js`** in your own words: one comment above each route saying what it does.
 

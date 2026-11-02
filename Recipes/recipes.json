@@ -18,6 +18,16 @@
     "title": "Caprese Salad",
     "ingredients": ["Tomatoes", "Mozzarella", "Basil", "Olive Oil", "Balsamic Vinegar"],
     "instructions": "Slice tomatoes and mozzarella. Arrange on a plate with basil leaves. Drizzle with olive oil and balsamic vinegar. Season with salt and pepper."
+  },
+  {
+    "title": "Beans on Toast",
+    "ingredients": ["Baked Beans (Tomato flavour)", "Warburtons Bread", "Butter", "Black Pepper"],
+    "instructions": "Toast 2 slices of bread to a golden brown colour. 3 or 4 table spoons of beans, 1 teaspoon of butter, some black pepper in a bowl and microwave for 1 min 30 sec. Butter toast to all 4 corners, stack on top or place side by side on a plate. Mix beans when they come out of the microwave. Pour the beans on top of the toast."
+  },
+  {
+    "title": "Scrambled Eggs",
+    "ingredients": ["Eggs", "Olive Oil"],
+    "instructions": "Preheat a pan. Add Olive Oil to the pan. crack open preferred amount of eggs into the pan. Keep stirring with a wooden spoon. Add salt & pepper along with any other seasoning you want."
   }
 ]
   

@@ -34,6 +34,8 @@ Open `http://localhost:3000`.
 
 **Question 1:** which recipe do you see? Which line of `index.js` picks that one?
 
+I see Pasta Carbonara and the line of code that picks it is `res.send(recipePage(recipes[0]));` and it is on line 28
+
 ## 2. Add your own recipes
 
 Add **two** recipes of your own to the end of `recipes.json`, in the same shape as the others. Reload the page.
@@ -41,9 +43,15 @@ Add **two** recipes of your own to the end of `recipes.json`, in the same shape 
 **TODO:** take away one comma between two recipes, save, and reload the page.
 **Question 2:** what does the server terminal say? Why is JSON this strict? (Week 3 slides.) Put the comma back.
 
+`SyntaxError: Expected ',' or ']' after array element in JSON at position 1055 (line 22 column 3)`
+
+The parser walks through the file character by character. After it finishes one recipe object, the JSON rules say the next character must be either a comma or a closing bracket
+
+
 ## 3. Send a request without the browser
 
 Open `Recipes/requests.http` and click **Send Request** above the first request. The answer opens on the right: the status line (`200 OK`), the headers, then the HTML.
+[x]
 
 ## 4. Every recipe, as JSON
 
@@ -59,6 +67,9 @@ Send the second request in `requests.http`, then open `http://localhost:3000/rec
 
 **Question 3:** look at the `Content-Type` header for `/` and for `/recipes`. What's different, and which one is for people and which one is for programs?
 
+
+`/recipes` is not for the people as it returns all in JSON format. `text/html` to render the page for a person to read and `application/json` is the data to parse
+
 ## 5. One recipe: a path parameter
 
 ```js
@@ -73,11 +84,19 @@ Send the `/recipes/1` request. `:index` is a **path parameter**: whatever is in 
 
 **Question 4:** which recipe is `/recipes/1`? Why not the first one?
 
-**TODO:** send the `/recipes/99` request. **Question 5:** what happens, and what does the terminal say? Fix it: put this line right after `const recipe = ...`, and send it again:
+`Chicken Stir fry` is the recipe returned. It is not the firt one since JS arrays start at index 0
+
+**TODO:** send the `/recipes/99` request. **Question 5:** what happens, and what does the terminal say? 
+
+An error `ypeError: Cannot read properties of undefined (reading 'title')` since there is no recipe at the position 99
+
+Fix it: put this line right after `const recipe = ...`, and send it again:
 
 ```js
 if (!recipe) return res.status(404).send("No recipe number " + index);
 ```
+
+Returns `No recipe number 99`
 
 ## 6. Search: a query parameter
 
@@ -92,6 +111,8 @@ app.get("/search", function (req, res) {
 Send the `/search?ingredient=Eggs` request. Everything after `?` is the **query string**, and Express puts it in `req.query`.
 
 **TODO:** change `Eggs` to `eggs` and send it again. **Question 6:** what comes back, and why? (Optional: make the search work for any capitalisation.)
+
+Nothing returns since it is case sensitive
 
 Commit: `Part 1: recipes`
 
